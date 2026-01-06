@@ -1,0 +1,95 @@
+# GasPot HMI Lab - Docker Compose Configuration
+# Multi-container ICS/OT cybersecurity training environment
+#
+# Services:
+#   - mariadb: Historian database (tank readings, alarms)
+#   - gaspot: TLS-350 ATG simulator
+#   - hmi: Flask web dashboard
+#
+# Usage:
+#   docker compose up -d
+#   docker compose logs -f
+#   docker compose down
+
+services:
+  mariadb:
+    image: mariadb:10.11
+    container_name: gaspot-historian
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-admin}
+      MYSQL_DATABASE: ${DB_NAME:-historian}
+      MYSQL_USER: ${DB_USER:-lab}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-password}
+    volumes:
+      - historian_data:/var/lib/mysql
+      - ./historian/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    ports:
+      - "3306:3306"
+    networks:
+      - labnet
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "lab", "-ppassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    restart: unless-stopped
+
+  gaspot:
+    build:
+      context: ./gaspot
+      dockerfile: Dockerfile
+    container_name: gaspot-simulator
+    ports:
+      - "10001:10001"
+    networks:
+      - labnet
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z localhost 10001 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  hmi:
+    build:
+      context: ./hmi
+      dockerfile: Dockerfile
+    container_name: gaspot-hmi
+    environment:
+      GASPOT_HOST: ${GASPOT_HOST:-gaspot-simulator}
+      GASPOT_PORT: ${GASPOT_PORT:-10001}
+      DB_HOST: ${DB_HOST:-gaspot-historian}
+      DB_PORT: ${DB_PORT:-3306}
+      DB_USER: ${DB_USER:-lab}
+      DB_PASSWORD: ${DB_PASSWORD:-password}
+      DB_NAME: ${DB_NAME:-historian}
+    ports:
+      - "5000:5000"
+    networks:
+      - labnet
+    depends_on:
+      gaspot:
+        condition: service_healthy
+      mariadb:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    restart: unless-stopped
+
+networks:
+  labnet:
+    driver: bridge
+    name: gaspot-lab-network
+
+volumes:
+  historian_data:
+    name: gaspot-historian-data

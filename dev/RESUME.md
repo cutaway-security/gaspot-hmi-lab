@@ -4,7 +4,7 @@
 
 This document provides context for resuming development after a break or when starting a new Claude Code session. It mirrors the PLAN.md structure but includes additional session-specific context.
 
-**Last Updated**: Not yet started
+**Last Updated**: 2026-01-06
 
 ---
 
@@ -13,15 +13,19 @@ This document provides context for resuming development after a break or when st
 ### Active Phase
 
 **Phase**: 1 - Foundation
-**Status**: NOT STARTED
+**Status**: IN PROGRESS (Tasks 1.1-1.4 complete, Task 1.5 blocked)
 
 ### Current Task
 
-**Task**: None - Development not yet started
+**Task**: 1.5 - Test network connectivity between containers
+**Status**: BLOCKED - Waiting for Docker upgrade
 
 ### Blockers
 
-None identified.
+1. Docker Compose V2 not available on development system
+   - System has `docker-compose` (V1) but not `docker compose` (V2)
+   - User upgrading Docker before continuing
+   - Configuration validates with V1, but build/run not yet tested
 
 ### Open Questions
 
@@ -33,27 +37,32 @@ None.
 
 ### Previous Session Summary
 
-No previous sessions.
+**Session 1 (2026-01-06)**:
+- Read all documentation
+- Reviewed original GasPot project at https://github.com/sjhilt/GasPot
+- Decided to use Option A: fork and modify original GasPot.py
+- Completed Phase 1 tasks 1.1-1.4
+- Blocked on task 1.5 due to Docker version
 
 ### What Was Being Worked On
 
-Nothing - project initialization.
+Phase 1: Foundation - Creating project structure and docker-compose configuration.
 
 ### What Needs To Happen Next
 
-1. Read all documentation (CLAUDE.md, ARCHITECTURE.md, PLAN.md, VIBE_HISTORY.md)
-2. Confirm understanding of project structure
-3. Begin Phase 1: Foundation
-4. Create directory structure
-5. Create docker-compose.yml skeleton
+1. User upgrades Docker to get Compose V2 support
+2. Resume Phase 1, Task 1.5: Test network connectivity between containers
+3. Complete Phase 1 acceptance criteria verification
+4. Update documentation with Phase 1 completion
+5. Begin Phase 2: GasPot Simulator
 
 ### Environment State
 
-- Containers: Not created
-- Database: Not initialized
-- GasPot: Not implemented
-- HMI: Not implemented
-- Scripts: Not created
+- Containers: Not yet built/started (Docker upgrade pending)
+- Database: Schema defined in init.sql (not initialized)
+- GasPot: Placeholder Dockerfile created
+- HMI: Placeholder Dockerfile created
+- Scripts: Directory created, scripts not yet written
 
 ---
 
@@ -61,21 +70,21 @@ Nothing - project initialization.
 
 This section mirrors PLAN.md for quick reference during session startup.
 
-### Phase 1: Foundation - NOT STARTED
+### Phase 1: Foundation - IN PROGRESS
 
 | # | Task | Status |
 |---|------|--------|
-| 1.1 | Create directory structure | NOT STARTED |
-| 1.2 | Create docker-compose.yml skeleton | NOT STARTED |
-| 1.3 | Create .env.example | NOT STARTED |
-| 1.4 | Validate Docker Compose runs | NOT STARTED |
-| 1.5 | Test network connectivity between containers | NOT STARTED |
+| 1.1 | Create directory structure | COMPLETE |
+| 1.2 | Create docker-compose.yml skeleton | COMPLETE |
+| 1.3 | Create .env.example | COMPLETE |
+| 1.4 | Validate Docker Compose runs | COMPLETE (V1 only) |
+| 1.5 | Test network connectivity between containers | BLOCKED |
 
 ### Phase 2: GasPot Simulator - NOT STARTED
 
 | # | Task | Status |
 |---|------|--------|
-| 2.1 | Create gaspot/Dockerfile | NOT STARTED |
+| 2.1 | Create gaspot/Dockerfile | PARTIAL (placeholder) |
 | 2.2 | Create gaspot/requirements.txt | NOT STARTED |
 | 2.3 | Create gaspot/config.ini | NOT STARTED |
 | 2.4 | Implement GasPot.py base | NOT STARTED |
@@ -91,10 +100,10 @@ This section mirrors PLAN.md for quick reference during session startup.
 
 | # | Task | Status |
 |---|------|--------|
-| 3.1 | Create historian/init.sql | NOT STARTED |
-| 3.2 | Add tanks table with 6 tank config | NOT STARTED |
-| 3.3 | Add tank_readings table | NOT STARTED |
-| 3.4 | Add alarms table | NOT STARTED |
+| 3.1 | Create historian/init.sql | PARTIAL (schema only) |
+| 3.2 | Add tanks table with 6 tank config | COMPLETE |
+| 3.3 | Add tank_readings table | COMPLETE |
+| 3.4 | Add alarms table | COMPLETE |
 | 3.5 | Create update_timestamps procedure | NOT STARTED |
 | 3.6 | Add seed data (24 hours history) | NOT STARTED |
 | 3.7 | Add sample alarms | NOT STARTED |
@@ -102,106 +111,44 @@ This section mirrors PLAN.md for quick reference during session startup.
 | 3.9 | Test queries work | NOT STARTED |
 | 3.10 | Test stored procedure | NOT STARTED |
 
-### Phase 4: HMI Application - NOT STARTED
+### Phase 4-8: NOT STARTED
 
-| # | Task | Status |
-|---|------|--------|
-| 4.1 | Create hmi/Dockerfile | NOT STARTED |
-| 4.2 | Create hmi/requirements.txt | NOT STARTED |
-| 4.3 | Create hmi/app/__init__.py | NOT STARTED |
-| 4.4 | Create hmi/app/atg_client.py | NOT STARTED |
-| 4.5 | Test atg_client.py standalone | NOT STARTED |
-| 4.6 | Create hmi/app/models.py | NOT STARTED |
-| 4.7 | Create hmi/app/routes.py | NOT STARTED |
-| 4.8 | Create /health endpoint | NOT STARTED |
-| 4.9 | Create main dashboard template | NOT STARTED |
-| 4.10 | Create trends template | NOT STARTED |
-| 4.11 | Create alarms template | NOT STARTED |
-| 4.12 | Add static CSS | NOT STARTED |
-| 4.13 | Test container builds | NOT STARTED |
-| 4.14 | Test health endpoint | NOT STARTED |
-| 4.15 | Test dashboard loads | NOT STARTED |
-
-### Phase 5: Integration - NOT STARTED
-
-| # | Task | Status |
-|---|------|--------|
-| 5.1 | Implement HMI polling loop | NOT STARTED |
-| 5.2 | Store readings to historian | NOT STARTED |
-| 5.3 | Test full data flow | NOT STARTED |
-| 5.4 | Test student write to GasPot | NOT STARTED |
-| 5.5 | Test student write to DB | NOT STARTED |
-| 5.6 | Verify container restart recovery | NOT STARTED |
-| 5.7 | Test with docker compose up/down cycles | NOT STARTED |
-
-### Phase 6: Scripts - NOT STARTED
-
-| # | Task | Status |
-|---|------|--------|
-| 6.1 | Create scripts/start_lab.sh | NOT STARTED |
-| 6.2 | Create scripts/stop_lab.sh | NOT STARTED |
-| 6.3 | Create scripts/reset_lab.sh | NOT STARTED |
-| 6.4 | Test start_lab.sh on clean system | NOT STARTED |
-| 6.5 | Test start_lab.sh with existing containers | NOT STARTED |
-| 6.6 | Test start_lab.sh with port conflict | NOT STARTED |
-| 6.7 | Test stop_lab.sh | NOT STARTED |
-| 6.8 | Test reset_lab.sh | NOT STARTED |
-| 6.9 | Test scripts with V1 compose | NOT STARTED |
-| 6.10 | Test scripts with V2 compose | NOT STARTED |
-
-### Phase 7: Student Tools - NOT STARTED
-
-| # | Task | Status |
-|---|------|--------|
-| 7.1 | Create tools/atg_client.py | NOT STARTED |
-| 7.2 | Implement --help | NOT STARTED |
-| 7.3 | Implement inventory command | NOT STARTED |
-| 7.4 | Implement pressure command | NOT STARTED |
-| 7.5 | Implement set-name command | NOT STARTED |
-| 7.6 | Implement set-volume command | NOT STARTED |
-| 7.7 | Implement raw command | NOT STARTED |
-| 7.8 | Test all commands | NOT STARTED |
-| 7.9 | Create README.md | NOT STARTED |
-| 7.10 | Create lab exercise guide | NOT STARTED |
-
-### Phase 8: Testing - NOT STARTED
-
-| # | Task | Status |
-|---|------|--------|
-| 8.1 | Test on Kali Linux VM | NOT STARTED |
-| 8.2 | Test start_lab.sh | NOT STARTED |
-| 8.3 | Test telnet interaction | NOT STARTED |
-| 8.4 | Test nmap NSE script | NOT STARTED |
-| 8.5 | Test Metasploit module | NOT STARTED |
-| 8.6 | Test atg_client.py | NOT STARTED |
-| 8.7 | Test HMI in browser | NOT STARTED |
-| 8.8 | Test mysql client | NOT STARTED |
-| 8.9 | Run full student exercise flow | NOT STARTED |
-| 8.10 | Document any issues | NOT STARTED |
+(See PLAN.md for full task lists)
 
 ---
 
 ## Known Issues
 
-None yet.
+1. **Docker Compose V2 not available**
+   - Symptom: `docker compose` command not found
+   - Impact: Cannot use V2 syntax, need to use `docker-compose`
+   - Resolution: User upgrading Docker
 
 ---
 
 ## Files Created
 
-None yet.
+| File | Purpose | Status |
+|------|---------|--------|
+| docker-compose.yml | Container orchestration | Complete |
+| .env.example | Environment template | Complete |
+| gaspot/Dockerfile | GasPot container | Placeholder |
+| hmi/Dockerfile | HMI container | Placeholder |
+| historian/init.sql | Database schema | Partial (schema only) |
 
 ---
 
 ## Files Modified
 
-None yet.
+None yet (all new files).
 
 ---
 
 ## Testing Notes
 
-None yet.
+- `docker-compose config` validates successfully
+- No port conflicts detected (10001, 5000, 3306 all available)
+- Container build/run not yet tested
 
 ---
 
@@ -209,21 +156,25 @@ None yet.
 
 | Date | Decision | Rationale |
 |------|----------|-----------|
-| - | Use 6 tanks (3 NG, 2 Diesel, 1 Water) | Realistic facility simulation |
-| - | HMI polls GasPot (Option A) | Cleaner separation of concerns |
-| - | Use weak passwords (password, admin) | Student lab environment |
-| - | Support both Compose V1 and V2 | Student environment compatibility |
+| 2026-01-06 | Use original GasPot as starting point (Option A) | CC0 license allows free use, saves development time |
+| 2026-01-06 | Use 6 tanks (3 NG, 2 Diesel, 1 Water) | Realistic facility simulation |
+| 2026-01-06 | HMI polls GasPot (Option A) | Cleaner separation of concerns |
+| 2026-01-06 | Use weak passwords (password, admin) | Student lab environment |
+| 2026-01-06 | Support both Compose V1 and V2 | Student environment compatibility |
 
 ---
 
 ## Quick Commands
 
 ```bash
-# Check container status
+# Check container status (V1)
+docker-compose ps
+
+# Check container status (V2)
 docker compose ps
 
 # View all logs
-docker compose logs -f
+docker-compose logs -f
 
 # Test GasPot
 echo -e '\x01I20100\n' | nc localhost 10001
@@ -235,10 +186,10 @@ curl http://localhost:5000/health
 docker exec gaspot-historian mysql -u lab -ppassword historian -e "SELECT * FROM tanks;"
 
 # Restart all containers
-docker compose restart
+docker-compose restart
 
 # Full reset
-docker compose down -v
+docker-compose down -v
 ```
 
 ---
@@ -247,11 +198,13 @@ docker compose down -v
 
 When starting next session:
 
-1. [ ] Read CLAUDE.md
-2. [ ] Read ARCHITECTURE.md
-3. [ ] Read PLAN.md
-4. [ ] Read this file (RESUME.md)
-5. [ ] Read VIBE_HISTORY.md
-6. [ ] State understanding of current status
-7. [ ] List proposed next steps
-8. [ ] Wait for confirmation before proceeding
+1. [ ] Verify Docker Compose V2 is available: `docker compose version`
+2. [ ] Read CLAUDE.md
+3. [ ] Read ARCHITECTURE.md
+4. [ ] Read PLAN.md
+5. [ ] Read this file (RESUME.md)
+6. [ ] Read VIBE_HISTORY.md
+7. [ ] Resume Phase 1, Task 1.5: Build and test containers
+8. [ ] Complete Phase 1 acceptance criteria
+9. [ ] Update documentation
+10. [ ] Begin Phase 2
