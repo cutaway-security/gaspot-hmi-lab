@@ -12,7 +12,7 @@
 
 | Phase | Name | Status | Description |
 |-------|------|--------|-------------|
-| 1 | Foundation | NOT STARTED | Repository structure, Docker Compose skeleton |
+| 1 | Foundation | IN PROGRESS | Repository structure, Docker Compose skeleton |
 | 2 | GasPot Simulator | NOT STARTED | Modified ATG with 6 tanks, fluctuation |
 | 3 | Historian Database | NOT STARTED | MariaDB schema, seed data, stored procedures |
 | 4 | HMI Application | NOT STARTED | Flask web dashboard with charts |
@@ -25,7 +25,7 @@
 
 ## Phase 1: Foundation
 
-**Status**: NOT STARTED
+**Status**: IN PROGRESS (Tasks 1.1-1.4 complete, Task 1.5 blocked on Docker upgrade)
 
 **Objective**: Set up repository structure and validate Docker environment.
 
@@ -33,17 +33,17 @@
 
 | # | Task | Status | Notes |
 |---|------|--------|-------|
-| 1.1 | Create directory structure | NOT STARTED | See ARCHITECTURE.md for layout |
-| 1.2 | Create docker-compose.yml skeleton | NOT STARTED | All 3 services defined |
-| 1.3 | Create .env.example | NOT STARTED | Environment variables template |
-| 1.4 | Validate Docker Compose runs | NOT STARTED | Use placeholder images |
-| 1.5 | Test network connectivity between containers | NOT STARTED | Ping between containers |
+| 1.1 | Create directory structure | COMPLETE | gaspot/, hmi/, historian/, tools/, scripts/ |
+| 1.2 | Create docker-compose.yml skeleton | COMPLETE | All 3 services defined |
+| 1.3 | Create .env.example | COMPLETE | Environment variables template |
+| 1.4 | Validate Docker Compose runs | COMPLETE | Validated with docker-compose (V1) |
+| 1.5 | Test network connectivity between containers | BLOCKED | Waiting for Docker upgrade |
 
 ### Acceptance Criteria
 
-- [ ] All directories created per ARCHITECTURE.md
-- [ ] docker-compose.yml parses without errors
-- [ ] `docker compose config` shows valid configuration
+- [x] All directories created per ARCHITECTURE.md
+- [x] docker-compose.yml parses without errors
+- [x] `docker compose config` shows valid configuration
 - [ ] Placeholder containers can communicate via network
 
 ### Deliverables

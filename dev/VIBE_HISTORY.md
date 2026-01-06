@@ -53,7 +53,63 @@ Additional context or observations.
 
 ## Sessions
 
-*No sessions recorded yet.*
+### Session: 2026-01-06 (Session 1)
+
+#### Session Info
+- **Date**: 2026-01-06
+- **Duration**: ~30 minutes
+- **Phase**: 1 - Foundation
+- **Focus**: Project setup and initial structure
+
+#### Objectives
+- [x] Read and understand project documentation
+- [x] Review original GasPot project
+- [x] Create directory structure
+- [x] Create docker-compose.yml
+- [x] Create .env.example
+- [x] Validate Docker Compose configuration
+- [ ] Test network connectivity between containers
+
+#### Completed
+- Read all documentation (CLAUDE.md, ARCHITECTURE.md, PLAN.md, RESUME.md, VIBE_HISTORY.md)
+- Reviewed original GasPot at https://github.com/sjhilt/GasPot
+- Analyzed GasPot.py, Dockerfile, and config.ini.dist
+- Decided to use Option A: fork and modify original GasPot
+- Created directory structure (gaspot/, hmi/, historian/, tools/, scripts/)
+- Created docker-compose.yml with all 3 services
+- Created .env.example with environment variables
+- Created placeholder Dockerfiles for gaspot and hmi
+- Created historian/init.sql with schema and tank configuration
+- Validated configuration with `docker-compose config`
+
+#### Problems Encountered
+| Problem | Cause | Solution |
+|---------|-------|----------|
+| Docker Compose V2 not available | Older Docker installation | User upgrading Docker |
+
+#### Lessons Learned
+- Development system has Docker Compose V1 only (`docker-compose` not `docker compose`)
+- Original GasPot has CC0 license (public domain) - free to modify
+- Original GasPot implements I20100-I20500 and S6020x, but not I20600 (pressure)
+
+#### Deferred/Blocked
+- Task 1.5: Test network connectivity (blocked on Docker upgrade)
+
+#### Next Steps
+1. User upgrades Docker to get Compose V2
+2. Resume Phase 1, Task 1.5
+3. Build and start containers
+4. Test network connectivity
+5. Complete Phase 1 acceptance criteria
+6. Begin Phase 2: GasPot Simulator
+
+#### Notes
+- Original GasPot uses select() for non-blocking socket I/O - good pattern to keep
+- Original has 4 tanks, need to expand to 6 (3 NG, 2 Diesel, 1 Water)
+- Need to add I20600 (pressure) and S60210/S60220 (set volume/pressure) commands
+- Need to implement fluctuation engine for dynamic values
+
+---
 
 ---
 
@@ -71,7 +127,9 @@ This section aggregates important lessons across all sessions for quick referenc
 
 ### Docker Compose
 
-*No lessons recorded yet.*
+- Check for both V1 (`docker-compose`) and V2 (`docker compose`) availability
+- Use version detection in scripts to support both syntaxes
+- `docker-compose config` validates YAML even without building images
 
 ### Flask/HMI
 
@@ -141,6 +199,7 @@ Track important decisions and their rationale.
 
 | Date | Decision | Rationale | Alternatives Considered |
 |------|----------|-----------|------------------------|
+| 2026-01-06 | Fork and modify original GasPot (Option A) | CC0 license, saves time, solid architecture | Write from scratch (Option B) |
 | - | 6 tanks total | Realistic facility | 4 tanks (too simple) |
 | - | HMI polls GasPot | Clean separation | GasPot pushes (complex) |
 | - | MariaDB 10.11 | Stable, well-documented | PostgreSQL, SQLite |
