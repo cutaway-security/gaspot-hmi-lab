@@ -1,0 +1,6 @@
+# GasPot HMI Dashboard Dependencies
+# Flask web application with MariaDB historian
+
+Flask==3.0.0
+SQLAlchemy==2.0.23
+PyMySQL==1.1.0

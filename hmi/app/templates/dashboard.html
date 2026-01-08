@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - GasPot HMI{% endblock %}
+
+{% block content %}
+<section class="tank-section">
+    <h2 class="section-title">NATURAL GAS STORAGE</h2>
+    <div class="tank-grid">
+        {% for tank in tanks if tank.tank_type == 'NATURAL_GAS' %}
+        <div class="tank-card" id="tank-{{ tank.tank_id }}">
+            <div class="tank-header">
+                <span class="tank-name">{{ tank.product_name }}</span>
+                <span class="tank-id">[{{ tank.tank_id }}]</span>
+            </div>
+            <div class="tank-visual">
+                {% set volume = live_data.get(tank.tank_id, {}).get('volume', 0) %}
+                {% set max_cap = tank.max_capacity | float %}
+                {% set fill_pct = ((volume / max_cap) * 100) | round | int if max_cap > 0 else 0 %}
+                <div class="tank-fill" style="height: {{ fill_pct }}%"></div>
+                <span class="tank-level">{{ fill_pct }}%</span>
+            </div>
+            <div class="tank-data">
+                <div class="data-row">
+                    <span class="data-label">Volume:</span>
+                    <span class="data-value" id="volume-{{ tank.tank_id }}">{{ "{:,.0f}".format(volume) }} {{ tank.capacity_unit }}</span>
+                </div>
+                {% if tank.has_pressure %}
+                <div class="data-row">
+                    <span class="data-label">Pressure:</span>
+                    {% set pressure = live_data.get(tank.tank_id, {}).get('pressure') %}
+                    <span class="data-value" id="pressure-{{ tank.tank_id }}">{{ "{:.1f}".format(pressure) if pressure else 'N/A' }} PSI</span>
+                </div>
+                {% endif %}
+                <div class="data-row">
+                    <span class="data-label">Temp:</span>
+                    {% set temp = live_data.get(tank.tank_id, {}).get('temperature', 0) %}
+                    <span class="data-value" id="temp-{{ tank.tank_id }}">{{ "{:.1f}".format(temp) }} F</span>
+                </div>
+            </div>
+            <div class="tank-status status-normal">NORMAL</div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="tank-section">
+    <h2 class="section-title">FUEL STORAGE</h2>
+    <div class="tank-grid">
+        {% for tank in tanks if tank.tank_type == 'DIESEL' %}
+        <div class="tank-card" id="tank-{{ tank.tank_id }}">
+            <div class="tank-header">
+                <span class="tank-name">{{ tank.product_name }}</span>
+                <span class="tank-id">[{{ tank.tank_id }}]</span>
+            </div>
+            <div class="tank-visual tank-diesel">
+                {% set volume = live_data.get(tank.tank_id, {}).get('volume', 0) %}
+                {% set max_cap = tank.max_capacity | float %}
+                {% set fill_pct = ((volume / max_cap) * 100) | round | int if max_cap > 0 else 0 %}
+                <div class="tank-fill" style="height: {{ fill_pct }}%"></div>
+                <span class="tank-level">{{ fill_pct }}%</span>
+            </div>
+            <div class="tank-data">
+                <div class="data-row">
+                    <span class="data-label">Volume:</span>
+                    <span class="data-value" id="volume-{{ tank.tank_id }}">{{ "{:,.0f}".format(volume) }} {{ tank.capacity_unit }}</span>
+                </div>
+                <div class="data-row">
+                    <span class="data-label">Temp:</span>
+                    {% set temp = live_data.get(tank.tank_id, {}).get('temperature', 0) %}
+                    <span class="data-value" id="temp-{{ tank.tank_id }}">{{ "{:.1f}".format(temp) }} F</span>
+                </div>
+            </div>
+            <div class="tank-status status-normal">NORMAL</div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="tank-section">
+    <h2 class="section-title">WATER STORAGE</h2>
+    <div class="tank-grid">
+        {% for tank in tanks if tank.tank_type == 'WATER' %}
+        <div class="tank-card" id="tank-{{ tank.tank_id }}">
+            <div class="tank-header">
+                <span class="tank-name">{{ tank.product_name }}</span>
+                <span class="tank-id">[{{ tank.tank_id }}]</span>
+            </div>
+            <div class="tank-visual tank-water">
+                {% set volume = live_data.get(tank.tank_id, {}).get('volume', 0) %}
+                {% set max_cap = tank.max_capacity | float %}
+                {% set fill_pct = ((volume / max_cap) * 100) | round | int if max_cap > 0 else 0 %}
+                <div class="tank-fill" style="height: {{ fill_pct }}%"></div>
+                <span class="tank-level">{{ fill_pct }}%</span>
+            </div>
+            <div class="tank-data">
+                <div class="data-row">
+                    <span class="data-label">Volume:</span>
+                    <span class="data-value" id="volume-{{ tank.tank_id }}">{{ "{:,.0f}".format(volume) }} {{ tank.capacity_unit }}</span>
+                </div>
+                <div class="data-row">
+                    <span class="data-label">Temp:</span>
+                    {% set temp = live_data.get(tank.tank_id, {}).get('temperature', 0) %}
+                    <span class="data-value" id="temp-{{ tank.tank_id }}">{{ "{:.1f}".format(temp) }} F</span>
+                </div>
+            </div>
+            <div class="tank-status status-normal">NORMAL</div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function refreshData() {
+    fetch('/api/live')
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'ok') {
+                // Update connection status
+                const statusEl = document.getElementById('connection-status');
+                statusEl.textContent = 'CONNECTED';
+                statusEl.className = 'status-indicator status-connected';
+
+                // Update last update time
+                document.getElementById('last-update-time').textContent = new Date().toLocaleString();
+
+                // Update tank values
+                data.data.forEach(tank => {
+                    const volEl = document.getElementById('volume-' + tank.tank_id);
+                    if (volEl) volEl.textContent = tank.volume.toLocaleString() + ' ' + volEl.textContent.split(' ').pop();
+
+                    const tempEl = document.getElementById('temp-' + tank.tank_id);
+                    if (tempEl) tempEl.textContent = tank.temperature.toFixed(1) + ' F';
+
+                    const pressEl = document.getElementById('pressure-' + tank.tank_id);
+                    if (pressEl && tank.pressure !== null) {
+                        pressEl.textContent = tank.pressure.toFixed(1) + ' PSI';
+                    }
+                });
+            } else {
+                const statusEl = document.getElementById('connection-status');
+                statusEl.textContent = 'OFFLINE';
+                statusEl.className = 'status-indicator status-disconnected';
+            }
+        })
+        .catch(err => {
+            const statusEl = document.getElementById('connection-status');
+            statusEl.textContent = 'OFFLINE';
+            statusEl.className = 'status-indicator status-disconnected';
+        });
+}
+
+// Auto-refresh every 10 seconds
+setInterval(refreshData, 10000);
+</script>
+{% endblock %}

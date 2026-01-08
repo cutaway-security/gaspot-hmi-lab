@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Alarms - GasPot HMI{% endblock %}
+
+{% block content %}
+<section class="alarms-section">
+    <div class="alarms-summary">
+        <div class="summary-card summary-critical">
+            <span class="summary-count">{{ active_alarms | selectattr('severity', 'equalto', 'CRITICAL') | list | length }}</span>
+            <span class="summary-label">CRITICAL</span>
+        </div>
+        <div class="summary-card summary-warning">
+            <span class="summary-count">{{ active_alarms | selectattr('severity', 'equalto', 'WARNING') | list | length }}</span>
+            <span class="summary-label">WARNING</span>
+        </div>
+        <div class="summary-card summary-info">
+            <span class="summary-count">{{ active_alarms | selectattr('severity', 'equalto', 'INFO') | list | length }}</span>
+            <span class="summary-label">INFO</span>
+        </div>
+    </div>
+
+    {% if active_alarms %}
+    <div class="alarms-active">
+        <h2>Active Alarms</h2>
+        <table class="alarms-table">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Tank</th>
+                    <th>Severity</th>
+                    <th>Type</th>
+                    <th>Message</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for alarm in active_alarms %}
+                <tr class="{{ alarm.severity_class }}">
+                    <td>{{ alarm.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                    <td>{{ tank_names.get(alarm.tank_id, 'Unknown') }} [{{ alarm.tank_id }}]</td>
+                    <td><span class="severity-badge severity-{{ alarm.severity | lower }}">{{ alarm.severity }}</span></td>
+                    <td>{{ alarm.alarm_type }}</td>
+                    <td>{{ alarm.message }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="no-alarms">
+        <p>No active alarms</p>
+    </div>
+    {% endif %}
+
+    <div class="alarms-history">
+        <h2>Alarm History (Last 100)</h2>
+        <table class="alarms-table">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Tank</th>
+                    <th>Severity</th>
+                    <th>Type</th>
+                    <th>Message</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for alarm in all_alarms %}
+                <tr class="{% if not alarm.acknowledged %}alarm-unacked{% endif %}">
+                    <td>{{ alarm.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                    <td>{{ tank_names.get(alarm.tank_id, 'Unknown') }} [{{ alarm.tank_id }}]</td>
+                    <td><span class="severity-badge severity-{{ alarm.severity | lower }}">{{ alarm.severity }}</span></td>
+                    <td>{{ alarm.alarm_type }}</td>
+                    <td>{{ alarm.message }}</td>
+                    <td>{% if alarm.acknowledged %}ACK{% else %}ACTIVE{% endif %}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

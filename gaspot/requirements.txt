@@ -1,0 +1,2 @@
+# GasPot Simulator Dependencies
+# Uses only Python standard library - no external dependencies required

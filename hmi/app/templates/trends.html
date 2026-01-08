@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block title %}Trends - GasPot HMI{% endblock %}
+
+{% block content %}
+<section class="trends-section">
+    <div class="trends-controls">
+        <label for="tank-select">Select Tank:</label>
+        <select id="tank-select" onchange="loadTrendData()">
+            {% for tank in tanks %}
+            <option value="{{ tank.tank_id }}">{{ tank.product_name }} [{{ tank.tank_id }}]</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="charts-container">
+        <div class="chart-wrapper">
+            <h3>Volume (24 Hours)</h3>
+            <canvas id="volumeChart"></canvas>
+        </div>
+
+        <div class="chart-wrapper">
+            <h3>Temperature (24 Hours)</h3>
+            <canvas id="tempChart"></canvas>
+        </div>
+
+        <div class="chart-wrapper" id="pressure-chart-wrapper">
+            <h3>Pressure (24 Hours)</h3>
+            <canvas id="pressureChart"></canvas>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let volumeChart, tempChart, pressureChart;
+
+function initCharts() {
+    const chartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            x: {
+                title: { display: true, text: 'Time' },
+                ticks: { maxRotation: 45, minRotation: 45 }
+            },
+            y: {
+                title: { display: true, text: 'Value' },
+                beginAtZero: false
+            }
+        },
+        plugins: {
+            legend: { display: false }
+        }
+    };
+
+    volumeChart = new Chart(document.getElementById('volumeChart'), {
+        type: 'line',
+        data: { labels: [], datasets: [{ label: 'Volume', data: [], borderColor: '#2196F3', tension: 0.1, fill: false }] },
+        options: { ...chartOptions, scales: { ...chartOptions.scales, y: { title: { display: true, text: 'Volume' } } } }
+    });
+
+    tempChart = new Chart(document.getElementById('tempChart'), {
+        type: 'line',
+        data: { labels: [], datasets: [{ label: 'Temperature', data: [], borderColor: '#FF9800', tension: 0.1, fill: false }] },
+        options: { ...chartOptions, scales: { ...chartOptions.scales, y: { title: { display: true, text: 'Temperature (F)' } } } }
+    });
+
+    pressureChart = new Chart(document.getElementById('pressureChart'), {
+        type: 'line',
+        data: { labels: [], datasets: [{ label: 'Pressure', data: [], borderColor: '#4CAF50', tension: 0.1, fill: false }] },
+        options: { ...chartOptions, scales: { ...chartOptions.scales, y: { title: { display: true, text: 'Pressure (PSI)' } } } }
+    });
+}
+
+function loadTrendData() {
+    const tankId = document.getElementById('tank-select').value;
+
+    fetch('/api/trends/' + tankId)
+        .then(response => response.json())
+        .then(result => {
+            if (result.status === 'ok') {
+                const data = result.data;
+
+                // Update volume chart
+                volumeChart.data.labels = data.timestamps;
+                volumeChart.data.datasets[0].data = data.volume;
+                volumeChart.update();
+
+                // Update temperature chart
+                tempChart.data.labels = data.timestamps;
+                tempChart.data.datasets[0].data = data.temperature;
+                tempChart.update();
+
+                // Update pressure chart (may be null for non-gas tanks)
+                const hasPressure = data.pressure.some(p => p !== null);
+                document.getElementById('pressure-chart-wrapper').style.display = hasPressure ? 'block' : 'none';
+
+                if (hasPressure) {
+                    pressureChart.data.labels = data.timestamps;
+                    pressureChart.data.datasets[0].data = data.pressure;
+                    pressureChart.update();
+                }
+            }
+        })
+        .catch(err => console.error('Error loading trend data:', err));
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    initCharts();
+    loadTrendData();
+});
+</script>
+{% endblock %}

@@ -6,6 +6,67 @@ The GasPot HMI Lab simulates a Natural Gas Distribution Terminal with tank monit
 
 ---
 
+## Documentation Structure
+
+The project documentation is organized into three categories based on audience:
+
+```
+gaspot-hmi-lab/
+    README.md                     # Project overview and quick start
+
+    docs/                         # Operations & Maintenance (lab operators)
+        OPERATIONS.md             # Container management, troubleshooting
+        GASPOT_MODIFICATIONS.md   # Changes from original GasPot project
+
+    exercises/                    # Student Content (lab users)
+        README.md                 # Scenario introduction and getting started
+        E01_DISCOVERY.md          # Exercise 1: Network reconnaissance
+        E02_ENUMERATION.md        # Exercise 2: Protocol analysis
+        E03_ATG_MANIPULATION.md   # Exercise 3: ATG data manipulation
+        E04_HMI_RECONNAISSANCE.md # Exercise 4: Web interface analysis
+        E05_DATABASE_EXPLOITATION.md  # Exercise 5: Historian attacks
+        E06_ATTACK_CHAIN.md       # Exercise 6: Combined attack scenario
+        E07_DEFENSE_ANALYSIS.md   # Exercise 7: Security assessment
+        challenges/               # Additional challenge exercises
+            C01_AUTOMATED_ATTACK.md
+            C02_DETECTION_SCRIPT.md
+            C03_PROTOCOL_ANALYSIS.md
+        docs/                     # Reference materials for students
+            PROTOCOL_REFERENCE.md # TLS-350 commands, ATG client usage
+            DATABASE_REFERENCE.md # Database schema, useful queries
+        INSTRUCTOR_GUIDE.md       # Teaching guide with goals and approaches
+
+    dev/                          # Development (not distributed to main)
+        ARCHITECTURE.md           # This file - technical design
+        PLAN.md                   # Project roadmap and phases
+        RESUME.md                 # Session context for development
+        VIBE_HISTORY.md           # Lessons learned and activity log
+```
+
+### Documentation Audiences
+
+| Directory | Audience | Purpose |
+|-----------|----------|---------|
+| README.md | Everyone | Quick orientation and getting started |
+| docs/ | Lab operators, maintainers | Deploy, manage, troubleshoot the lab |
+| exercises/ | Students, learners | Hands-on security exercises |
+| exercises/docs/ | Students | Reference materials during exercises |
+| dev/ | Developers | Internal development tracking |
+
+### Key Files by Use Case
+
+| Use Case | Primary Document |
+|----------|------------------|
+| "How do I start the lab?" | README.md |
+| "How do I run exercises?" | exercises/README.md |
+| "What TLS-350 commands exist?" | exercises/docs/PROTOCOL_REFERENCE.md |
+| "What's the database schema?" | exercises/docs/DATABASE_REFERENCE.md |
+| "Container won't start" | docs/OPERATIONS.md |
+| "What was changed from original GasPot?" | docs/GASPOT_MODIFICATIONS.md |
+| "How should I teach this lab?" | exercises/INSTRUCTOR_GUIDE.md |
+
+---
+
 ## System Architecture
 
 ```

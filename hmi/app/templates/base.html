@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}GasPot HMI{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <header class="header">
+        <div class="header-title">
+            <h1>RIVERSIDE NATURAL GAS TERMINAL</h1>
+            <span class="header-subtitle">TANK MONITORING SYSTEM</span>
+        </div>
+        <div class="header-status">
+            <span id="connection-status" class="status-indicator {% if atg_connected %}status-connected{% else %}status-disconnected{% endif %}">
+                {% if atg_connected %}CONNECTED{% else %}OFFLINE{% endif %}
+            </span>
+            <span class="last-update">Last Update: <span id="last-update-time">{{ last_update.strftime('%Y-%m-%d %H:%M:%S') if last_update else 'N/A' }}</span></span>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <a href="{{ url_for('main.dashboard') }}" class="nav-link {% if request.endpoint == 'main.dashboard' %}active{% endif %}">DASHBOARD</a>
+        <a href="{{ url_for('main.trends') }}" class="nav-link {% if request.endpoint == 'main.trends' %}active{% endif %}">TRENDS</a>
+        <a href="{{ url_for('main.alarms') }}" class="nav-link {% if request.endpoint == 'main.alarms' %}active{% endif %}">
+            ALARMS
+            {% if active_alarms_count and active_alarms_count > 0 %}
+            <span class="alarm-badge">{{ active_alarms_count }}</span>
+            {% endif %}
+        </a>
+        <button id="refresh-btn" class="nav-btn" onclick="refreshData()">REFRESH</button>
+    </nav>
+
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <span>GasPot HMI Lab - ICS/OT Cybersecurity Training Environment</span>
+    </footer>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

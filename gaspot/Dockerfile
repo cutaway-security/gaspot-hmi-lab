@@ -1,8 +1,8 @@
 # GasPot Simulator Dockerfile
 # TLS-350 ATG Simulator for ICS/OT training
 #
-# Phase 1: Placeholder for validation
-# Phase 2: Full implementation
+# Simulates a Veeder-Root TLS-350 Automatic Tank Gauge
+# with 6 tanks: 3 Natural Gas, 2 Diesel, 1 Water
 
 FROM python:3.11-slim
 
@@ -17,17 +17,16 @@ RUN groupadd -g 10001 gaspot && \
 
 WORKDIR /app
 
-# Placeholder: Copy files when they exist
-# COPY --chown=gaspot:gaspot requirements.txt .
-# RUN pip install --no-cache-dir -r requirements.txt
-# COPY --chown=gaspot:gaspot . .
+# Copy requirements and install dependencies
+COPY --chown=gaspot:gaspot requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Phase 1: Simple TCP listener placeholder for testing
-RUN echo '#!/bin/bash\necho "GasPot placeholder - Phase 1"\nwhile true; do echo -e "HTTP/1.1 200 OK\r\n\r\nGasPot Placeholder" | nc -l -p 10001 -q 1; done' > /app/placeholder.sh && \
-    chmod +x /app/placeholder.sh
+# Copy application files
+COPY --chown=gaspot:gaspot GasPot.py .
+COPY --chown=gaspot:gaspot config.ini .
 
 USER gaspot
 
 EXPOSE 10001
 
-CMD ["/bin/bash", "/app/placeholder.sh"]
+CMD ["python", "-u", "GasPot.py"]
