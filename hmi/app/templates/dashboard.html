@@ -7,17 +7,17 @@
     <h2 class="section-title">NATURAL GAS STORAGE</h2>
     <div class="tank-grid">
         {% for tank in tanks if tank.tank_type == 'NATURAL_GAS' %}
-        <div class="tank-card" id="tank-{{ tank.tank_id }}">
+        <div class="tank-card" id="tank-{{ tank.tank_id }}" data-max-capacity="{{ tank.max_capacity }}" data-unit="{{ tank.capacity_unit }}">
             <div class="tank-header">
-                <span class="tank-name">{{ tank.product_name }}</span>
+                <span class="tank-name" id="name-{{ tank.tank_id }}">{{ tank.product_name }}</span>
                 <span class="tank-id">[{{ tank.tank_id }}]</span>
             </div>
             <div class="tank-visual">
                 {% set volume = live_data.get(tank.tank_id, {}).get('volume', 0) %}
                 {% set max_cap = tank.max_capacity | float %}
                 {% set fill_pct = ((volume / max_cap) * 100) | round | int if max_cap > 0 else 0 %}
-                <div class="tank-fill" style="height: {{ fill_pct }}%"></div>
-                <span class="tank-level">{{ fill_pct }}%</span>
+                <div class="tank-fill" id="fill-{{ tank.tank_id }}" style="height: {{ fill_pct }}%"></div>
+                <span class="tank-level" id="level-{{ tank.tank_id }}">{{ fill_pct }}%</span>
             </div>
             <div class="tank-data">
                 <div class="data-row">
@@ -47,17 +47,17 @@
     <h2 class="section-title">FUEL STORAGE</h2>
     <div class="tank-grid">
         {% for tank in tanks if tank.tank_type == 'DIESEL' %}
-        <div class="tank-card" id="tank-{{ tank.tank_id }}">
+        <div class="tank-card" id="tank-{{ tank.tank_id }}" data-max-capacity="{{ tank.max_capacity }}" data-unit="{{ tank.capacity_unit }}">
             <div class="tank-header">
-                <span class="tank-name">{{ tank.product_name }}</span>
+                <span class="tank-name" id="name-{{ tank.tank_id }}">{{ tank.product_name }}</span>
                 <span class="tank-id">[{{ tank.tank_id }}]</span>
             </div>
             <div class="tank-visual tank-diesel">
                 {% set volume = live_data.get(tank.tank_id, {}).get('volume', 0) %}
                 {% set max_cap = tank.max_capacity | float %}
                 {% set fill_pct = ((volume / max_cap) * 100) | round | int if max_cap > 0 else 0 %}
-                <div class="tank-fill" style="height: {{ fill_pct }}%"></div>
-                <span class="tank-level">{{ fill_pct }}%</span>
+                <div class="tank-fill" id="fill-{{ tank.tank_id }}" style="height: {{ fill_pct }}%"></div>
+                <span class="tank-level" id="level-{{ tank.tank_id }}">{{ fill_pct }}%</span>
             </div>
             <div class="tank-data">
                 <div class="data-row">
@@ -80,17 +80,17 @@
     <h2 class="section-title">WATER STORAGE</h2>
     <div class="tank-grid">
         {% for tank in tanks if tank.tank_type == 'WATER' %}
-        <div class="tank-card" id="tank-{{ tank.tank_id }}">
+        <div class="tank-card" id="tank-{{ tank.tank_id }}" data-max-capacity="{{ tank.max_capacity }}" data-unit="{{ tank.capacity_unit }}">
             <div class="tank-header">
-                <span class="tank-name">{{ tank.product_name }}</span>
+                <span class="tank-name" id="name-{{ tank.tank_id }}">{{ tank.product_name }}</span>
                 <span class="tank-id">[{{ tank.tank_id }}]</span>
             </div>
             <div class="tank-visual tank-water">
                 {% set volume = live_data.get(tank.tank_id, {}).get('volume', 0) %}
                 {% set max_cap = tank.max_capacity | float %}
                 {% set fill_pct = ((volume / max_cap) * 100) | round | int if max_cap > 0 else 0 %}
-                <div class="tank-fill" style="height: {{ fill_pct }}%"></div>
-                <span class="tank-level">{{ fill_pct }}%</span>
+                <div class="tank-fill" id="fill-{{ tank.tank_id }}" style="height: {{ fill_pct }}%"></div>
+                <span class="tank-level" id="level-{{ tank.tank_id }}">{{ fill_pct }}%</span>
             </div>
             <div class="tank-data">
                 <div class="data-row">
@@ -127,6 +127,11 @@ function refreshData() {
 
                 // Update tank values
                 data.data.forEach(tank => {
+                    // Update tank name
+                    const nameEl = document.getElementById('name-' + tank.tank_id);
+                    if (nameEl) nameEl.textContent = tank.product_name;
+
+                    // Update numeric values
                     const volEl = document.getElementById('volume-' + tank.tank_id);
                     if (volEl) volEl.textContent = tank.volume.toLocaleString() + ' ' + volEl.textContent.split(' ').pop();
 
@@ -136,6 +141,19 @@ function refreshData() {
                     const pressEl = document.getElementById('pressure-' + tank.tank_id);
                     if (pressEl && tank.pressure !== null) {
                         pressEl.textContent = tank.pressure.toFixed(1) + ' PSI';
+                    }
+
+                    // Update graphical fill level
+                    const tankCard = document.getElementById('tank-' + tank.tank_id);
+                    if (tankCard) {
+                        const maxCapacity = parseFloat(tankCard.dataset.maxCapacity) || 1;
+                        const fillPct = Math.round((tank.volume / maxCapacity) * 100);
+
+                        const fillEl = document.getElementById('fill-' + tank.tank_id);
+                        if (fillEl) fillEl.style.height = fillPct + '%';
+
+                        const levelEl = document.getElementById('level-' + tank.tank_id);
+                        if (levelEl) levelEl.textContent = fillPct + '%';
                     }
                 });
             } else {

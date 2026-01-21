@@ -14,6 +14,8 @@ Your first job: figure out what services are running and what you're dealing wit
 - What the TLS-350 ATG service looks like
 - Basic reconnaissance techniques for OT environments
 
+**New to network scanning tools?** See [Appendix: Tools Overview](#appendix-tools-overview) at the end of this document for explanations of nmap and netcat.
+
 ---
 
 ## Tasks
@@ -85,3 +87,56 @@ Continue to [Exercise 2: Protocol Enumeration](E02_ENUMERATION.md)
 **Tip**: On a real assessment, you'd probably start with a broader scan and work your way down. Here we're keeping it focused since we already know what's in the lab.
 
 **Real World**: Shodan and Censys have found thousands of ATGs exposed directly to the internet. Many respond to queries from anyone who connects.
+
+---
+
+## Appendix: Tools Overview
+
+If you're not familiar with the network tools used in this exercise, here's a quick overview.
+
+### nmap (Network Mapper)
+
+**What it is**: A powerful open-source tool for network discovery and security auditing. It's the standard tool for finding what hosts and services are available on a network.
+
+**Common flags used in this lab**:
+
+| Flag | Purpose |
+|------|---------|
+| `-sV` | Service/version detection - tries to determine what software is running on open ports |
+| `-p <ports>` | Specify which ports to scan (e.g., `-p 22,80,443` or `-p 1-1000`) |
+| `-sT` | TCP connect scan (default when not running as root) |
+| `-sS` | TCP SYN scan (faster, requires root privileges) |
+
+**Example**:
+```bash
+nmap -sV -p 10001 localhost
+```
+This scans port 10001 on localhost and attempts to identify what service is running.
+
+**Learn more**: https://nmap.org/book/man.html
+
+### nc (netcat)
+
+**What it is**: A versatile networking utility that reads and writes data across network connections. Often called the "Swiss Army knife" of networking tools, it can be used for port scanning, file transfers, and creating simple network connections.
+
+**Common flags used in this lab**:
+
+| Flag | Purpose |
+|------|---------|
+| `-z` | Zero-I/O mode - just scan for listening services without sending data |
+| `-v` | Verbose - show connection status messages |
+| `-w <secs>` | Timeout - wait specified seconds for a connection |
+
+**Example**:
+```bash
+nc -zv localhost 10001
+```
+This checks if port 10001 is open on localhost without sending any data. You'll see "Connection succeeded" or "Connection refused".
+
+**Sending data**:
+```bash
+echo -e '\x01I20100\n' | nc localhost 10001
+```
+This pipes a TLS-350 command to netcat, which sends it to the ATG and displays the response.
+
+**Learn more**: `man nc` or https://man.openbsd.org/nc.1
