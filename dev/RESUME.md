@@ -4,7 +4,7 @@
 
 This document provides context for resuming development after a break or when starting a new Claude Code session. It mirrors the PLAN.md structure but includes additional session-specific context.
 
-**Last Updated**: 2026-01-08
+**Last Updated**: 2026-01-21
 
 ---
 
@@ -13,12 +13,12 @@ This document provides context for resuming development after a break or when st
 ### Active Phase
 
 **Phase**: 8 - Testing (Volunteer Evaluation)
-**Status**: IN PROGRESS (Phases 1-7 complete)
+**Status**: IN PROGRESS (Phases 1-7, 9 complete)
 
 ### Current Task
 
-**Task**: Phase 9 - Documentation Restructure
-**Status**: Planning complete, ready to implement
+**Task**: Volunteer feedback fixes and improvements
+**Status**: COMPLETE - Fixed 4 issues from volunteer testing
 
 ### Blockers
 
@@ -139,89 +139,62 @@ None.
 
 Phase 9 COMPLETE. Documentation restructure finished, developer test passed.
 
-### What Was Completed (This Session)
+### What Was Completed (This Session - 2026-01-21)
 
-1. Fixed Alarms page bug (base.html line 30, routes.py)
-   - Added `active_alarms_count` to dashboard, trends, alarms routes
-   - Updated base.html to use `active_alarms_count` for nav badge
-   - Verified all pages return 200 OK
-2. Reviewed documentation structure
-3. Planned Phase 9: Documentation Restructure
-4. Updated ARCHITECTURE.md with Documentation Structure section
-5. Completed Phase 9 Group A (Operations Documentation):
-   - Created docs/OPERATIONS.md (~350 lines)
-     - Container architecture and configuration
-     - Start/stop/reset procedures
-     - Health checks and environment variables
-     - Troubleshooting guide
-     - File structure reference
-   - Created docs/GASPOT_MODIFICATIONS.md (~250 lines)
-     - Original project reference
-     - Summary of all changes
-     - Detailed modification descriptions
-     - Protocol compatibility notes
-6. Completed Phase 9 Group B (Student Reference Documentation):
-   - Created exercises/docs/ and exercises/challenges/ directories
-   - Created exercises/docs/PROTOCOL_REFERENCE.md (~400 lines)
-     - TLS-350 protocol overview and command format
-     - All read commands (I20100-I20600) with examples
-     - All write commands (S602xx, S60210, S60220) with examples
-     - ATG client tool usage documentation
-     - Manual testing with netcat examples
-     - Quick reference card
-   - Created exercises/docs/DATABASE_REFERENCE.md (~350 lines)
-     - Connection information and credentials
-     - Complete schema for all 3 tables
-     - Column descriptions and data types
-     - Extensive useful queries section
-     - Data manipulation examples for attack scenarios
-     - Quick reference section
-7. Completed Phase 9 Group C (Exercise Content):
-   - Created exercises/README.md (~120 lines)
-     - Scenario introduction (Cutaway Security consultant role)
-     - Riverside Natural Gas Terminal setting
-     - Exercise overview table with timing
-     - Links to all exercises and reference docs
-   - Created 7 exercise files (E01-E07, ~100-150 lines each)
-     - E01_DISCOVERY.md - Network reconnaissance
-     - E02_ENUMERATION.md - Protocol analysis
-     - E03_ATG_MANIPULATION.md - Data modification
-     - E04_HMI_RECONNAISSANCE.md - Web interface analysis
-     - E05_DATABASE_EXPLOITATION.md - Historian attacks
-     - E06_ATTACK_CHAIN.md - Combined attack scenario
-     - E07_DEFENSE_ANALYSIS.md - Security assessment
-   - Created 3 challenge files (C01-C03, ~100-150 lines each)
-     - C01_AUTOMATED_ATTACK.md - Script the attack
-     - C02_DETECTION_SCRIPT.md - Build monitoring
-     - C03_PROTOCOL_ANALYSIS.md - Wireshark deep dive
-   - Created exercises/INSTRUCTOR_GUIDE.md (~350 lines)
-     - Learning objectives for each exercise
-     - Timing estimates and pacing guidance
-     - Discussion questions and facilitation tips
-     - Common issues and troubleshooting
-     - Assessment ideas
+**Volunteer Feedback Fixes**:
+1. Fixed HMI dashboard graphical elements not updating on refresh
+   - Added data-max-capacity and data-unit attributes to tank cards
+   - Added IDs to tank-fill, tank-level, and tank-name elements
+   - Updated refreshData() JavaScript to update fill percentage and name
+2. Fixed tank name not updating when changed via ATG
+   - Dashboard now shows live tank names from ATG
+3. Fixed startup script database test command
+   - Added mysqladmin ping command for quick connectivity test
+   - Kept interactive mysql command for actual sessions
+4. Added Tools Overview appendix to E01_DISCOVERY.md
+   - Explained nmap and nc (netcat) tools and flags
+   - Added reference link at beginning of exercise
+
+**Exercise Reorder**:
+5. Swapped E03 and E04 exercises for better learning flow
+   - E03 is now HMI Reconnaissance (observe HMI first)
+   - E04 is now ATG Manipulation (then modify and watch changes)
+   - Updated all cross-references in E02, E03, E04
+   - Updated exercises/README.md exercise table
+   - Updated exercises/INSTRUCTOR_GUIDE.md sections
+   - Added teaser in E03 about next exercise
+   - Added browser tab tip in E04 for real-time observation
+
+**Documentation Updates**:
+6. Updated evaluation documents with new exercise references
+   - STUDENT_EVAL_CHECKLIST.md - updated exercise options
+   - STUDENT_EVAL_FORM.md - updated exercise list and options
+7. Updated PLAN.md Phase Overview table (Phase 9 marked COMPLETE)
+8. Updated RESUME.md with current session work
+9. Updated VIBE_HISTORY.md with session entry
 
 ### What Needs To Happen Next
 
-**Phase 9 Complete - Ready for Volunteer Testing**
+**Volunteer Feedback Addressed - Continue Testing**
 
-Phase 8 (Volunteer Evaluation Framework) can now resume with actual volunteer testers.
+All issues from initial volunteer testing have been fixed. Ready for additional testing or deployment.
 
 Next steps:
-1. Recruit volunteer testers
-2. Have volunteers run through STUDENT_EVAL_CHECKLIST.md
-3. Collect completed STUDENT_EVAL_FORM.md submissions
-4. Analyze feedback and address any issues found
+1. Continue volunteer testing with updated exercises
+2. Collect additional STUDENT_EVAL_FORM.md submissions
+3. Address any new issues found
+4. Consider project complete when testing is satisfactory
 
 ### Environment State
 
 - Containers: All 3 running and healthy
 - Database: Schema, 6 tanks, 1728+ readings, 18 alarms
 - GasPot: Full implementation running on port 10001 (6 tanks, TLS-350)
-- HMI: Full implementation running on port 5000 with dashboard, trends, alarms
+- HMI: Full implementation running on port 5000 with dashboard, trends, alarms (rebuilt with dashboard fixes)
 - Scripts: All 3 scripts complete and tested (start, stop, reset)
 - Tools: atg_client.py complete and tested
-- Documentation: README.md and LAB_EXERCISES.md complete
+- Exercises: 7 exercises (E01-E07), 3 challenges (C01-C03), reordered E03/E04
+- Documentation: Fully restructured for students (exercises/), operators (docs/), and developers (dev/)
 
 ---
 

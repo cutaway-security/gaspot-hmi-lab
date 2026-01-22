@@ -130,34 +130,7 @@ python3 tools/atg_client.py -H <server-ip> inventory
 
 ---
 
-### E03: ATG Manipulation
-
-**Purpose**: Demonstrate write capabilities and operational impact.
-
-**Goal**: Students successfully modify tank names and volumes.
-
-**Approach**:
-- Modify tank names via protocol
-- Change volume readings
-- Observe changes in HMI
-
-**Time**: 20 minutes
-
-**Key Points**:
-- Write commands require no additional privileges
-- Changes take effect immediately
-- No audit trail of modifications
-
-**Discussion Questions**:
-- What real-world decisions might operators make based on false data?
-- Could this cause safety incidents?
-- How would you verify ATG data integrity?
-
-**Safety Discussion**: This is a good time to discuss the Oldsmar water treatment incident (2021) where an attacker modified chemical levels through remote access.
-
----
-
-### E04: HMI Reconnaissance
+### E03: HMI Reconnaissance
 
 **Purpose**: Explore web-based HMI vulnerabilities.
 
@@ -179,6 +152,35 @@ python3 tools/atg_client.py -H <server-ip> inventory
 - What traditional web vulnerabilities might apply to HMIs?
 - How is HMI security different from typical web security?
 - What data would you monitor if you had persistent API access?
+
+---
+
+### E04: ATG Manipulation
+
+**Purpose**: Demonstrate write capabilities and operational impact.
+
+**Goal**: Students successfully modify tank names and volumes, observing changes in HMI.
+
+**Approach**:
+- Open HMI in browser alongside terminal
+- Modify tank names via protocol
+- Change volume readings
+- Watch changes appear in HMI in real-time
+
+**Time**: 20 minutes
+
+**Key Points**:
+- Write commands require no additional privileges
+- Changes take effect immediately
+- No audit trail of modifications
+- HMI reflects manipulated data without verification
+
+**Discussion Questions**:
+- What real-world decisions might operators make based on false data?
+- Could this cause safety incidents?
+- How would you verify ATG data integrity?
+
+**Safety Discussion**: This is a good time to discuss the Oldsmar water treatment incident (2021) where an attacker modified chemical levels through remote access.
 
 ---
 

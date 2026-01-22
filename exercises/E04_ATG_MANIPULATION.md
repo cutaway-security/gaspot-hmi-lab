@@ -1,4 +1,4 @@
-# Exercise 3: ATG Manipulation
+# Exercise 4: ATG Manipulation
 
 ## The Situation
 
@@ -13,6 +13,12 @@ This is where things get interesting from a security perspective.
 - How to modify ATG data without authentication
 - The immediate impact of data manipulation
 - Why lack of authentication is a critical vulnerability
+
+---
+
+## Before You Begin
+
+**Tip**: Open the HMI dashboard (http://localhost:5000) in a separate browser tab or window. Keep it visible alongside your terminal. This way you can watch your changes appear in real-time as you manipulate the ATG.
 
 ---
 
@@ -48,13 +54,13 @@ Look at Tank 1's product name. If you see "COMPROMISED" - you just modified oper
 
 ### 4. Check the HMI
 
-Open the HMI dashboard in your browser:
+Remember the HMI dashboard you explored in the previous exercise? Check your browser tab now:
 
 ```
 http://localhost:5000
 ```
 
-Find Tank 1. Does it show the new name? The HMI polls the ATG every few seconds, so you might need to wait a moment.
+Find Tank 1. Does it show the new name? The HMI polls the ATG every few seconds, so you might need to wait a moment or refresh the page.
 
 ### 5. Modify Volume Readings
 
@@ -70,7 +76,7 @@ This tells the ATG that Tank 1 now contains 99,999 units. Check the inventory:
 python3 tools/atg_client.py inventory | head -15
 ```
 
-Refresh the HMI dashboard. Watch the tank visualization - it probably looks ridiculous now, showing way more than 100% capacity.
+Watch your HMI browser tab - you know the layout from the previous exercise. Find Tank 1 and watch the tank visualization update. It probably looks ridiculous now, showing way more than 100% capacity.
 
 ### 6. Try Zero
 
@@ -127,9 +133,9 @@ No response is returned for write commands - they just execute silently.
 
 ## What's Next
 
-We've manipulated the ATG directly. But operators don't usually talk to ATGs - they use the HMI. Let's explore that interface.
+We've manipulated the ATG and seen the impact on the HMI. There's one more component to explore: the historian database where all this data gets stored. Direct database access opens up different attack possibilities.
 
-Continue to [Exercise 4: HMI Reconnaissance](E04_HMI_RECONNAISSANCE.md)
+Continue to [Exercise 5: Database Exploitation](E05_DATABASE_EXPLOITATION.md)
 
 ---
 

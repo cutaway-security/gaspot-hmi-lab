@@ -178,7 +178,8 @@ Complete these if time permits. These validate integration and usability.
 1. Open **exercises/README.md** to see the exercise overview
 2. Choose one exercise to attempt:
    - **exercises/E02_ENUMERATION.md** (Protocol Enumeration) OR
-   - **exercises/E03_ATG_MANIPULATION.md** (ATG Data Manipulation)
+   - **exercises/E03_HMI_RECONNAISSANCE.md** (HMI Reconnaissance) OR
+   - **exercises/E04_ATG_MANIPULATION.md** (ATG Data Manipulation)
 3. Follow the exercise instructions
 4. Note any confusion, errors, or unclear instructions
 5. **Record in eval form**: Q9 (lab exercises)

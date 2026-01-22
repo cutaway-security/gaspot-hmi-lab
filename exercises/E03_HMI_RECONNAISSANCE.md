@@ -1,4 +1,4 @@
-# Exercise 4: HMI Reconnaissance
+# Exercise 3: HMI Reconnaissance
 
 ## The Situation
 
@@ -35,7 +35,7 @@ Spend a few minutes clicking around. Visit each page:
 
 Stay on the Dashboard page and watch for about 30 seconds. See how the "Last Update" timestamp changes? The HMI polls the ATG periodically and refreshes the display.
 
-If you modified tank values in the previous exercise, you'll see those changes appear here automatically.
+Watch how the values fluctuate slightly over time - the ATG simulates natural changes in tank levels.
 
 ### 3. Open Developer Tools
 
@@ -126,9 +126,9 @@ Consider:
 
 ## What's Next
 
-We've seen the ATG and HMI. There's one more component: the historian database where all this data gets stored. Direct database access opens up different attack possibilities.
+You've observed how operators see the facility through the HMI. But what if you could change what they see? In the next exercise, you'll manipulate ATG values and watch your changes appear in this dashboard in real-time.
 
-Continue to [Exercise 5: Database Exploitation](E05_DATABASE_EXPLOITATION.md)
+Continue to [Exercise 4: ATG Manipulation](E04_ATG_MANIPULATION.md)
 
 ---
 

@@ -50,8 +50,8 @@ Work through these exercises in order. Each one builds on what you learned befor
 |----------|-------|------|
 | [E01: Discovery](E01_DISCOVERY.md) | Find what's on the network | 15 min |
 | [E02: Enumeration](E02_ENUMERATION.md) | Learn the protocol and gather intel | 20 min |
-| [E03: ATG Manipulation](E03_ATG_MANIPULATION.md) | See what you can change | 20 min |
-| [E04: HMI Reconnaissance](E04_HMI_RECONNAISSANCE.md) | Explore the operator interface | 15 min |
+| [E03: HMI Reconnaissance](E03_HMI_RECONNAISSANCE.md) | Explore the operator interface | 15 min |
+| [E04: ATG Manipulation](E04_ATG_MANIPULATION.md) | See what you can change | 20 min |
 | [E05: Database Exploitation](E05_DATABASE_EXPLOITATION.md) | Access the historical data | 25 min |
 | [E06: Attack Chain](E06_ATTACK_CHAIN.md) | Put it all together | 30 min |
 | [E07: Defense Analysis](E07_DEFENSE_ANALYSIS.md) | Write up your findings | 30 min |

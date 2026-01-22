@@ -109,9 +109,9 @@ For your assessment report, document:
 
 ## What's Next
 
-Reading data is interesting, but what about writing? Let's see if we can modify things.
+Reading data is interesting. Before we try modifying things, let's see how operators view this data through the HMI.
 
-Continue to [Exercise 3: ATG Manipulation](E03_ATG_MANIPULATION.md)
+Continue to [Exercise 3: HMI Reconnaissance](E03_HMI_RECONNAISSANCE.md)
 
 ---
 

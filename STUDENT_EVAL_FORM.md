@@ -122,14 +122,15 @@ Were the lab exercises clear and functional?
 Exercises are located in the **exercises/** directory:
 - exercises/README.md - Overview and scenario introduction
 - exercises/E02_ENUMERATION.md - Protocol enumeration
-- exercises/E03_ATG_MANIPULATION.md - ATG data manipulation
+- exercises/E03_HMI_RECONNAISSANCE.md - HMI reconnaissance
+- exercises/E04_ATG_MANIPULATION.md - ATG data manipulation
 
 Reference documentation:
 - exercises/docs/PROTOCOL_REFERENCE.md - TLS-350 ATG protocol
 - exercises/docs/DATABASE_REFERENCE.md - Database schema and queries
 
 - COMPLETED: [YES/NO/SKIPPED]
-- EXERCISE_ATTEMPTED: [E02 / E03 / other / NA]
+- EXERCISE_ATTEMPTED: [E02 / E03 / E04 / other / NA]
 - EXERCISE_FILE_FOUND: [YES/NO/NA] (could you find the exercise?)
 - INSTRUCTIONS_CLEAR: [YES/NO/PARTIAL/NA]
 - EXERCISE_WORKED: [YES/NO/PARTIAL/NA]

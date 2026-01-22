@@ -19,8 +19,8 @@
 | 5 | Integration | COMPLETE | Connect all components, polling loop |
 | 6 | Scripts | COMPLETE | Startup, shutdown, reset scripts |
 | 7 | Student Tools | COMPLETE | ATG client script, documentation |
-| 8 | Testing | IN PROGRESS | Volunteer evaluation framework |
-| 9 | Documentation | NOT STARTED | Restructure docs, exercises, operations |
+| 8 | Testing | IN PROGRESS | Volunteer evaluation and feedback |
+| 9 | Documentation | COMPLETE | Restructure docs, exercises, operations |
 
 ---
 

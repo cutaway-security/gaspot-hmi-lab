@@ -1212,6 +1212,81 @@ All 13 tasks COMPLETE:
 
 ---
 
+### Session 6 (2026-01-21)
+
+#### Goals
+- Address volunteer feedback from initial testing
+- Fix reported issues in HMI and documentation
+
+#### Volunteer Feedback Received
+Four issues reported from testing:
+1. HMI dashboard graphical elements (fill bars, percentages) don't update on refresh
+2. Tank names don't update on HMI when changed via ATG
+3. Database test command in startup script stays connected instead of showing status and exiting
+4. Need explanation of nc and nmap commands for users unfamiliar with these tools
+
+#### Fixes Implemented
+
+**Issue 1: Graphical elements not updating**
+- Root cause: refreshData() JavaScript only updated numeric values, not visual elements
+- Fix: Added data-max-capacity attributes to tank cards, IDs to fill/level elements
+- Updated JavaScript to calculate and update fill percentage on each refresh
+- Files: hmi/app/templates/dashboard.html
+
+**Issue 2: Tank name not updating**
+- Root cause: tank-name spans had no ID, JavaScript didn't update them
+- Fix: Added IDs to tank-name elements, added code to update from API response
+- Files: hmi/app/templates/dashboard.html
+
+**Issue 3: Database test command**
+- Root cause: docker exec -it mysql creates interactive session
+- Fix: Added mysqladmin ping command as quick test, kept interactive command separately
+- Files: scripts/start_lab.sh
+
+**Issue 4: Tool explanations**
+- Fix: Added "Appendix: Tools Overview" at end of E01_DISCOVERY.md
+- Explains nmap and nc with common flags and examples
+- Added reference link at beginning of exercise
+- Files: exercises/E01_DISCOVERY.md
+
+#### Exercise Reorder
+
+User requested swapping E03 and E04 for better learning flow:
+- Students first observe HMI (E03), then manipulate ATG and watch changes (E04)
+
+Changes made:
+- Created E03_HMI_RECONNAISSANCE.md (from old E04)
+- Created E04_ATG_MANIPULATION.md (from old E03)
+- Removed old E03_ATG_MANIPULATION.md and E04_HMI_RECONNAISSANCE.md
+- Updated E02_ENUMERATION.md What's Next link
+- Updated exercises/README.md exercise table
+- Updated exercises/INSTRUCTOR_GUIDE.md sections
+- Added teaser in E03 about upcoming ATG manipulation
+- Added browser tab tip in E04 for real-time observation
+
+#### Documentation Updates
+- STUDENT_EVAL_CHECKLIST.md: Updated exercise options to include E03, E04
+- STUDENT_EVAL_FORM.md: Updated exercise list and EXERCISE_ATTEMPTED options
+- PLAN.md: Updated Phase Overview (Phase 9 now shows COMPLETE)
+- RESUME.md: Updated with current session work
+- VIBE_HISTORY.md: Added this session entry
+
+#### Testing
+- Rebuilt HMI container with updated dashboard template
+- Verified all containers healthy
+- Confirmed dashboard HTML has new IDs and data attributes
+- Confirmed JavaScript updates graphical elements
+- Confirmed API returns product_name for name updates
+- Verified mysqladmin ping returns "mysqld is alive" and exits
+- Verified all exercise links point to correct files
+
+#### Lessons Learned
+- JavaScript refresh functions need to update ALL dynamic elements, not just text values
+- Browser tab tip improves student experience for real-time observation exercises
+- Exercise order matters for pedagogical flow - observe before manipulate
+
+---
+
 ## Lessons Learned Summary
 
 This section aggregates important lessons across all sessions for quick reference.
