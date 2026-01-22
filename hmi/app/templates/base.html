@@ -39,7 +39,12 @@
     </main>
 
     <footer class="footer">
-        <span>GasPot HMI Lab - ICS/OT Cybersecurity Training Environment</span>
+        <div class="footer-content">
+            <span>GasPot HMI Lab - ICS/OT Cybersecurity Training Environment</span>
+            <a href="https://www.cutawaysecurity.com" target="_blank" class="footer-logo">
+                <img src="{{ url_for('static', filename='cutsec_logo.png') }}" alt="Cutaway Security" height="24">
+            </a>
+        </div>
     </footer>
 
     {% block scripts %}{% endblock %}

@@ -410,10 +410,33 @@ body {
 .footer {
     background-color: #16213e;
     padding: 15px 30px;
-    text-align: center;
     color: #666;
     font-size: 0.85em;
     border-top: 1px solid #333;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.footer-logo:hover {
+    opacity: 1;
+}
+
+.footer-logo img {
+    height: 24px;
+    width: auto;
 }
 
 /* Responsive */
