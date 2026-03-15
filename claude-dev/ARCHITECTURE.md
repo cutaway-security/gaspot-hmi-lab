@@ -36,7 +36,7 @@ gaspot-hmi-lab/
             DATABASE_REFERENCE.md # Database schema, useful queries
         INSTRUCTOR_GUIDE.md       # Teaching guide with goals and approaches
 
-    dev/                          # Development (not distributed to main)
+    claude-dev/                   # Development (not distributed to main)
         ARCHITECTURE.md           # This file - technical design
         PLAN.md                   # Project roadmap and phases
         RESUME.md                 # Session context for development
@@ -51,7 +51,7 @@ gaspot-hmi-lab/
 | docs/ | Lab operators, maintainers | Deploy, manage, troubleshoot the lab |
 | exercises/ | Students, learners | Hands-on security exercises |
 | exercises/docs/ | Students | Reference materials during exercises |
-| dev/ | Developers | Internal development tracking |
+| claude-dev/ | Developers | Internal development tracking |
 
 ### Key Files by Use Case
 

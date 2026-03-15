@@ -194,7 +194,7 @@ Next steps:
 - Scripts: All 3 scripts complete and tested (start, stop, reset)
 - Tools: atg_client.py complete and tested
 - Exercises: 7 exercises (E01-E07), 3 challenges (C01-C03), reordered E03/E04
-- Documentation: Fully restructured for students (exercises/), operators (docs/), and developers (dev/)
+- Documentation: Fully restructured for students (exercises/), operators (docs/), and developers (claude-dev/)
 
 ---
 

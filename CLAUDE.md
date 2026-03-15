@@ -176,11 +176,11 @@ When making changes, update the appropriate documents:
 
 | Change Type | Update |
 |-------------|--------|
-| Architecture change | dev/ARCHITECTURE.md |
-| Phase completion | dev/PLAN.md |
-| Session activity | dev/RESUME.md, dev/VIBE_HISTORY.md |
-| Problem encountered | dev/VIBE_HISTORY.md |
-| Lesson learned | dev/VIBE_HISTORY.md |
+| Architecture change | claude-dev/ARCHITECTURE.md |
+| Phase completion | claude-dev/PLAN.md |
+| Session activity | claude-dev/RESUME.md, claude-dev/VIBE_HISTORY.md |
+| Problem encountered | claude-dev/VIBE_HISTORY.md |
+| Lesson learned | claude-dev/VIBE_HISTORY.md |
 | New dependency | requirements.txt (in appropriate directory) |
 | Usage change | README.md |
 
@@ -279,7 +279,7 @@ gaspot-hmi-lab/
     LICENSE
     docker-compose.yml        # Container orchestration
     .env.example              # Environment template
-    dev/
+    claude-dev/
         ARCHITECTURE.md       # System design + container management
         PLAN.md               # Roadmap and phases
         RESUME.md             # Session status and context
@@ -316,10 +316,10 @@ gaspot-hmi-lab/
 ### Starting a Session
 
 1. Read CLAUDE.md (this file)
-2. Read dev/ARCHITECTURE.md
-3. Read dev/PLAN.md
-4. Read dev/RESUME.md
-5. Read dev/VIBE_HISTORY.md
+2. Read claude-dev/ARCHITECTURE.md
+3. Read claude-dev/PLAN.md
+4. Read claude-dev/RESUME.md
+5. Read claude-dev/VIBE_HISTORY.md
 6. State your understanding of current status
 7. List proposed next steps
 8. Wait for confirmation before proceeding

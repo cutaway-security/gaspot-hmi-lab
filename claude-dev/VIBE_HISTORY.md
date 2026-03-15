@@ -751,7 +751,7 @@ None.
   - Verified all pages (dashboard, trends, alarms) return 200 OK
 - Reviewed documentation structure and identified issues:
   - README.md is overloaded with mixed content
-  - Database schema buried in dev/ARCHITECTURE.md
+  - Database schema buried in claude-dev/ARCHITECTURE.md
   - No operations/maintenance guide for lab operators
   - docs/ directory underutilized
 - Planned Phase 9: Documentation Restructure
@@ -783,12 +783,12 @@ None.
 
 #### Notes
 - Phase 8 tasks 8.5-8.8 on hold until Phase 9 complete
-- dev/ directory will not be pushed to main (handled during merge)
+- claude-dev/ directory will not be pushed to main (handled during merge)
 - Alarms bug fix validated the evaluation framework works
 
 #### Additional Update
 - Added Documentation Structure section to ARCHITECTURE.md
-- Documents the exercises/, docs/, dev/ organization
+- Documents the exercises/, docs/, claude-dev/ organization
 - Includes audience matrix and use case lookup table
 
 ---

@@ -362,7 +362,7 @@
 
 **Status**: COMPLETE
 
-**Objective**: Reorganize documentation into clear separation between operations/maintenance (docs/), student exercises (exercises/), and development (dev/).
+**Objective**: Reorganize documentation into clear separation between operations/maintenance (docs/), student exercises (exercises/), and development (claude-dev/).
 
 **Approach**: Create new directory structure with story-driven exercises, reference documentation for students, and operations guide for lab maintainers.
 
@@ -391,7 +391,7 @@ gaspot-hmi-lab/
             PROTOCOL_REFERENCE.md # TLS-350, ATG client
             DATABASE_REFERENCE.md # Schema, queries
         INSTRUCTOR_GUIDE.md       # Purpose, goals, approach
-    dev/                          # Development only (not pushed to main)
+    claude-dev/                   # Development only (not pushed to main)
 ```
 
 ### Tasks

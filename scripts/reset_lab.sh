@@ -6,6 +6,7 @@
 # - Stops all containers
 # - Removes all data volumes
 # - Optionally removes container images
+# - Restarts the lab with a fresh state via start_lab.sh
 #
 # Usage: ./reset_lab.sh [--full]
 #
@@ -19,8 +20,9 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 CONTAINERS=(gaspot-historian gaspot-simulator gaspot-hmi)
-VOLUMES=(gaspot-hmi-lab_historian-data)
-IMAGES=(gaspot-hmi-lab-gaspot-simulator gaspot-hmi-lab-gaspot-hmi)
+VOLUMES=(gaspot-historian-data)
+IMAGES=(gaspot-hmi-lab-gaspot gaspot-hmi-lab-hmi)
+NETWORK="gaspot-lab-network"
 
 # Parse arguments
 FULL_RESET=false
@@ -131,7 +133,7 @@ remove_volumes() {
     done
 
     # Remove any volumes matching the project pattern
-    docker volume ls --format '{{.Name}}' | grep "gaspot-hmi-lab" | while read vol; do
+    docker volume ls --format '{{.Name}}' | grep "gaspot" | while read vol; do
         docker volume rm "$vol" 2>/dev/null || true
     done
 
@@ -150,7 +152,7 @@ remove_images() {
         done
 
         # Also try project-prefixed images
-        docker images --format '{{.Repository}}:{{.Tag}}' | grep "gaspot-hmi-lab" | while read img; do
+        docker images --format '{{.Repository}}:{{.Tag}}' | grep "gaspot-hmi-lab-" | while read img; do
             docker rmi "$img" 2>/dev/null || true
         done
 
@@ -165,10 +167,26 @@ cleanup_dangling() {
     # Remove dangling images
     docker image prune -f &>/dev/null || true
 
-    # Remove unused networks
-    docker network prune -f &>/dev/null || true
+    # Remove the lab network if it still exists
+    if docker network ls --format '{{.Name}}' | grep -q "^${NETWORK}$"; then
+        docker network rm "$NETWORK" 2>/dev/null || true
+    fi
 
     log_success "Cleanup complete"
+}
+
+# Restart the lab
+restart_lab() {
+    log_info "Restarting lab with fresh state..."
+    echo ""
+
+    if [ -x "$SCRIPT_DIR/start_lab.sh" ]; then
+        "$SCRIPT_DIR/start_lab.sh"
+    else
+        log_error "start_lab.sh not found or not executable at $SCRIPT_DIR/start_lab.sh"
+        log_info "Run manually: ./scripts/start_lab.sh"
+        exit 1
+    fi
 }
 
 # Main execution
@@ -190,12 +208,13 @@ main() {
     echo ""
     log_success "GasPot HMI Lab has been reset"
     echo ""
-    echo "  To start fresh: ./scripts/start_lab.sh"
-    echo ""
+
     if [ "$FULL_RESET" = true ]; then
-        echo "  Note: Images were removed. First start will rebuild containers."
+        log_info "Images were removed. Rebuild will occur during restart."
         echo ""
     fi
+
+    restart_lab
 }
 
 main "$@"
